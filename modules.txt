@@ -1,0 +1,36 @@
+battery - along with charging and discharging circuits
+rpi - with iot
+antenna
+ham radio
+io pins
+strong structure
+medi box
+food - dehydrated
+waste water to useful
+deployable solar panel packed in
+ir heat sensor camera
+
+module 1 - 
+battery - along with charging and discharging circuits
+rpi - with iot
+antenna
+ham radio
+io pins
+power gen with cranking
+connect to satellite with gps once in a while, 
+
+module 2 - 
+medi box
+food - dehydrated
+waste water to useful
+
+module 3 - 
+survival kit - knives, blades, ropes, fire starter, rechargeable torch, flare gun, life jacket, mask
+ir heat sensor cam
+
+module 4 -  dropping mech
+car airbag mech, along with parachutes, co2 cannisters, inflatable module
+
+positions : 
+
+battery module - place down
