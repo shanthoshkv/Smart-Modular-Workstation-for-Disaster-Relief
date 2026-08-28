@@ -4,21 +4,29 @@ Air-droppable, modular field station for disaster response. Submitted to the VYO
 
 ![Final assembly with parachute](docs/images/final_assembly-13.png)
 
-## What it is
+## Overview
 
 A single droppable unit that gives first responders power, communications, medical supplies, and survival gear in a location with no road access, dropped from an aircraft and slowed down enough to land intact. Designed by a 4-person team (Akula Uday Kiran, Kiran V Airani, Shanthosh K V, Tejas L, RVCE Aerospace Engineering) as a CAD + analysis submission, not a built prototype.
 
-The whole thing is split into four modules stacked into one drop-capable housing:
+The brief (VYOMA Designathon Problem Statement 4) asked for a deployable disaster-relief package that survives an air drop and is self-sufficient once on the ground. The team's approach: pack everything a stranded group needs for the first 24-48 hours into one housing, size the parachute/airbag system so the drop itself doesn't destroy the payload, and run enough structural analysis to justify that the housing survives worst-case touchdown.
 
-**Module 1: Power and communication.** LiPo battery pack (3,685-4,914 Wh, ~30.7 kg), Raspberry Pi 5 running an IoT dashboard for power/GPS/occupancy telemetry, a ham radio + antenna for long-range comms, GPS/satellite connectivity, and a hand-crank generator as backup power. Estimated endurance at 100 W average draw: 37-49 hours.
+![Deployed configuration, parachute above the payload housing](docs/images/parachute_deployed-14.png)
 
-**Module 2: Medical and sustenance.** First-aid stock, dehydrated food rations, and a water purification unit (dry weight ~2.76 kg) for producing potable water in the field.
+## Module breakdown
 
-**Module 3: Survival kit.** Knife, rope (neoprene, 70 g), fire starter, hand warmers, glow sticks, a flare gun, life jackets, masks, and a thermal/IR camera for locating survivors.
+The whole thing is split into four modules stacked into one drop-capable housing. Layout below is from the team's own design notes (`docs/modules.txt`), cross-checked against the actual CAD parts in `cad/`.
 
-**Module 4: Deployment mechanism.** Parachute + airbag system that handles the actual drop, plus the final assembly housing that packages all three modules above.
+![Module packing layout inside the housing](docs/images/module_layout-8.png)
 
-All parts are modeled as separate SolidWorks components in this repo (`.SLDPRT` / `.SLDASM`), assembled into the final unit shown above.
+**Module 1: Power and communication.** LiPo battery pack (3,685-4,914 Wh, ~30.7 kg), Raspberry Pi 5 running an IoT dashboard for power/GPS/occupancy telemetry, a ham radio + antenna for long-range comms (`ham_radio_box.SLDPRT`, `antenna.SLDPRT`, `antenna_base.SLDPRT`), GPS/satellite connectivity (`gps_module.SLDPRT`, `gps_sensor.SLDPRT`) for periodic location pings, and a hand-crank generator (`power_gen_with_crank.SLDPRT`) as backup power. A folding solar panel (`solar panel.SLDPRT`) is also part of this module in the CAD, packed flat and deployed after landing, it isn't called out in the top-level design notes but is modeled and present in the assembly. Estimated endurance at 100 W average draw: 37-49 hours.
+
+**Module 2: Medical and sustenance.** First-aid stock (`First Aid Kit.SLDPRT`), dehydrated food rations (`Food Kit.SLDPRT`), and a water purification unit (dry weight ~2.76 kg, two CAD variants: `Portable Water Filter.SLDPRT` and `Portable Water Filter New.SLDPRT`) for producing potable water in the field. The original design notes also list "waste water to useful" as a goal for this module; the water filter part is the CAD representation of that, there's no separate greywater-recycling geometry beyond it.
+
+**Module 3: Survival kit.** Knife (`knife.SLDASM`), rope (neoprene, 70 g, `rope.SLDPRT`), fire starter, hand warmers (`handwarmers.SLDPRT`), glow sticks, a flare gun (`gun.SLDPRT`), life jackets, masks, and a thermal/IR camera (`ir_camera.SLDPRT`) for locating survivors.
+
+**Module 4: Deployment mechanism.** Parachute + airbag system that handles the actual drop (the design notes describe it as a car-airbag-style mechanism with CO2 cannisters inflating on descent, modeled in CAD as `explicit.SLDPRT`/`explicit.SLDASM` and the `half*`/`modal.SLDASM` casing variants), plus the final assembly housing (`casing.SLDPRT`, `casing_mani.SLDPRT`, `casing_mani1.SLDPRT`, `case.SLDPRT`, `rpi_casing.SLDPRT`, `concrete_base.SLDPRT`, `wheel.SLDPRT`) that packages all three modules above.
+
+All parts are modeled as separate SolidWorks components under `cad/` (`.SLDPRT` / `.SLDASM`), assembled into the final unit shown above.
 
 ## Descent and impact analysis
 
@@ -65,19 +73,22 @@ The static structural (FEA) runs used a design impact load of 30,000 N (4x the c
 
 All three cases came back within deformation limits, so the housing holds together under the worst-case drop scenario the team modeled.
 
-Full writeup with all module breakdowns, weights, and the complete analysis: [`VYOMA_DESIGNATHON_DOCUMENTATION.pdf`](VYOMA_DESIGNATHON_DOCUMENTATION.pdf). Competition slide deck: [`Vyoma Designathon PPT.pdf`](Vyoma%20Designathon%20PPT.pdf). Descent CFD as a video: [`casing falling cfd.mp4`](casing%20falling%20cfd.mp4).
+Full writeup with all module breakdowns, weights, and the complete analysis: [`VYOMA_DESIGNATHON_DOCUMENTATION.pdf`](docs/VYOMA_DESIGNATHON_DOCUMENTATION.pdf). Competition slide deck: [`Vyoma Designathon PPT.pdf`](docs/Vyoma%20Designathon%20PPT.pdf). Descent CFD as a video: [`casing falling cfd.mp4`](docs/casing%20falling%20cfd.mp4). Original team design notes (module list, part placement): [`docs/modules.txt`](docs/modules.txt).
 
-## What's actually in this repo
+## Repo layout
 
-Just CAD (SolidWorks `.SLDPRT`/`.SLDASM` for every component and sub-assembly) plus the two PDF reports and the CFD video. There's no analysis code, no scripts, nothing to run, this is a mechanical design submission. Open the parts in SolidWorks (or another STEP-compatible viewer after export) to inspect geometry.
+```
+cad/            every component and sub-assembly (.SLDPRT / .SLDASM)
+docs/           the two PDF reports, the CFD video, design notes, figures
+docs/images/    figures extracted from the report for this README
+```
+
+Just CAD plus the reports and video, no analysis code, no scripts, nothing to run, this is a mechanical design submission. Open the parts in SolidWorks (or another STEP-compatible viewer after export) to inspect geometry.
 
 ## Limitations
 
 - CAD-only submission, never built or drop-tested as a physical prototype.
 - The FEA corner-impact cases are idealized (rigid corner strike, no soil/water compliance, no drop-test correlation).
 - Mass and weight figures per component are estimates based on assumed materials (PET plastic, titanium alloy for the flare gun, etc.), not measured.
-- No detailed structural design for the parachute risers, airbag inflation system, or release mechanism, those show up as CAD geometry but aren't analyzed.
-
-## Repo note
-
-Several `.SLDPRT` files are large (`FINAL.SLDPRT` and `fianlllll1111.SLDPRT` are ~21 MB each, appear to be duplicate/iteration exports of the same final assembly). Not touched here since it's not clear which is authoritative, worth checking if both are still needed.
+- No detailed structural design for the parachute risers, airbag inflation system, or release mechanism, those show up as CAD geometry but aren't analyzed (the CO2-cannister airbag inflation described in the design notes has no sizing calculation behind it, it's geometry only).
+- `cad/FINAL.SLDPRT` and `cad/fianlllll1111.SLDPRT` are both ~21 MB and appear to be duplicate/iteration exports of the same final assembly. Not touched here since it's not clear which is authoritative, worth checking if both are still needed.
